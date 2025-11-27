@@ -14,24 +14,7 @@ model = joblib.load('tutoring_model.pkl')
 student_data = pd.DataFrame(columns=['StudentID','Attendance','HomeworkRate','MidtermScore','Participation','PreviousGPA'])
 
 @app.route("/", methods=["GET", "POST"])
-def index():
-    prediction = None
-    if request.method == "POST":
-        student_id = int(request.form["student_id"])
-        attendance = float(request.form["attendance"])
-        homework = float(request.form["homework"])
-        midterm = float(request.form["midterm"])
-        participation = float(request.form["participation"])
-        gpa = float(request.form["gpa"])
-
-        features = [[student_id, attendance, homework, midterm, participation, gpa]]
-        pred = model.predict(features)[0]
-        prediction = "PASS" if pred == 1 else "FAIL — Needs Tutoring"
-
-    return render_template("index.html", prediction=prediction)
-
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
+def dashboard():  # make dashboard the landing page
     global student_data
 
     if request.method == "POST":
@@ -49,18 +32,48 @@ def dashboard():
         passing = int((predictions == 1).sum())
         at_risk = int((predictions == 0).sum())
         average_gpa = float(student_data['PreviousGPA'].mean())
-        chart_data = predictions.astype(int).tolist()  # ensure it's a list of ints
     else:
         total_students = passing = at_risk = average_gpa = 0
-        chart_data = [0, 0]  # default values for chart
 
     return render_template("dashboard.html",
                            stats={'total_students': total_students, 'passing': passing, 'at_risk': at_risk, 'average_gpa': average_gpa},
-                           chart_data=chart_data)
+                           active_page='dashboard')
+
+@app.route("/predict", methods=["GET", "POST"])
+def index():
+    global student_data
+    prediction = None
+    selected_student = None
+
+    if student_data.empty:
+        students_list = []
+    else:
+        students_list = student_data['StudentID'].tolist()
+
+    if request.method == "POST":
+        student_id = int(request.form["student_id"])
+        selected_student = student_data[student_data['StudentID'] == student_id].iloc[0]
+
+        features = [[
+            selected_student['StudentID'],
+            selected_student['Attendance'],
+            selected_student['HomeworkRate'],
+            selected_student['MidtermScore'],
+            selected_student['Participation'],
+            selected_student['PreviousGPA']
+        ]]
+        pred = model.predict(features)[0]
+        prediction = "PASS" if pred == 1 else "FAIL — Needs Tutoring"
+
+    return render_template("index.html",
+                           prediction=prediction,
+                           students_list=students_list,
+                           selected_student_id=selected_student['StudentID'] if selected_student is not None else None,
+                           active_page='predict')
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", active_page='about')
 
 if __name__ == '__main__':
     if not os.path.exists('uploads'):
