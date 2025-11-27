@@ -31,7 +31,6 @@ TutorSense/
 │     ├── index.html
 │     ├── dashboard.html
 │     └── about.html
-│── uploads/
 
 ```
 
@@ -68,9 +67,9 @@ joblib.dump(model, 'tutoring_model.pkl')
 5. **Run the Flask app**
 
 ```bash
-python app.py (Windows)
+python app.py   # Windows
 or
-python3 app.py (Mac)
+python3 app.py  # macOS
 ```
 
 6. **Open your browser** and go to:
@@ -121,5 +120,3 @@ StudentID,Attendance,HomeworkRate,MidtermScore,Participation,PreviousGPA
 * **Tailwind CSS** – styling
 * **HTML & Jinja2** – frontend templates
 
-
-Do you want me to make that too?
