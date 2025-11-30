@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4 text-center">Student Risk Predictor</h2>
+
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold mb-6 text-center">Student Risk Predictor</h2>
 
     {% if students_list %}
     <form method="POST" class="space-y-4">
@@ -10,21 +11,70 @@
             <select name="student_id" class="w-full border rounded px-3 py-2" required>
                 <option value="">-- Select --</option>
                 {% for sid in students_list %}
-                <option value="{{ sid }}" {% if sid == selected_student_id %}selected{% endif %}>{{ sid }}</option>
+                <option value="{{ sid }}" {% if sid == selected_student_id %}selected{% endif %}>
+                    {{ sid }}
+                </option>
                 {% endfor %}
             </select>
         </div>
 
-        <button type="submit" class="w-full bg-blue-600 text-white rounded py-2 font-bold hover:bg-blue-500 transition">Predict</button>
+        <button type="submit" class="w-full bg-blue-600 text-white rounded py-2 font-bold hover:bg-blue-500 transition">
+            Predict
+        </button>
     </form>
     {% else %}
-    <p class="text-center text-red-500 font-semibold">No students uploaded yet. Please upload CSV in the dashboard.</p>
+    <p class="text-center text-red-500 font-semibold">
+        No students uploaded yet. Please upload CSV in the dashboard.
+    </p>
     {% endif %}
 
+
     {% if prediction %}
-    <div class="mt-4 bg-blue-100 text-blue-800 p-4 rounded text-center font-semibold">
-        {{ prediction }}
+    <div class="mt-6 bg-gray-100 p-4 rounded space-y-4">
+
+
+        <div class="text-center">
+            <h3 class="text-lg font-bold">Risk Level</h3>
+            <p class="
+                text-2xl font-extrabold
+                {% if prediction.risk_level == 'High' %} text-red-600
+                {% elif prediction.risk_level == 'Medium' %} text-yellow-600
+                {% else %} text-green-600{% endif %}
+            ">
+                {{ prediction.risk_level }}
+            </p>
+        </div>
+
+
+        <div class="text-center">
+            <h3 class="text-lg font-bold">Literacy Risk Score</h3>
+            <p class="text-2xl font-semibold">{{ prediction.literacy_score }}%</p>
+        </div>
+
+
+        <div class="text-center">
+            <h3 class="text-lg font-bold">Predicted Final Grade</h3>
+            <p class="text-2xl font-semibold text-blue-700">{{ prediction.predicted_grade }}</p>
+        </div>
+
+
+        {% if prediction.reason %}
+        <div>
+            <h3 class="text-lg font-bold mb-1">Reason for Risk</h3>
+            <p class="text-gray-700">{{ prediction.reason }}</p>
+        </div>
+        {% endif %}
+
+
+        {% if prediction.recommendation %}
+        <div>
+            <h3 class="text-lg font-bold mb-1">Recommended Action</h3>
+            <p class="text-gray-700">{{ prediction.recommendation }}</p>
+        </div>
+        {% endif %}
+
     </div>
     {% endif %}
 </div>
+
 {% endblock %}
