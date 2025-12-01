@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TutorSense – Passing Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-card {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-link {
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        table th {
+            background: rgba(238, 242, 255, 0.8);
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        table tr:hover {
+            background: rgba(255, 255, 255, 0.45);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<nav class="bg-white/70 backdrop-blur-md shadow-md py-4 px-8 flex justify-between items-center fixed w-full z-10">
+    <div class="flex items-center space-x-2">
+        <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+        <span class="font-bold text-xl text-blue-700">TutorSense</span>
+    </div>
+
+    <div class="flex space-x-4">
+        <a class="nav-link text-gray-700" href="#">Dashboard</a>
+        <a class="nav-link text-gray-700" href="#">Predictor</a>
+        <a class="nav-link text-gray-700" href="#">About</a>
+    </div>
+</nav>
+
+<!-- PAGE TITLE -->
+<div class="text-center mt-32 mb-10 px-6">
+    <h1 class="text-5xl font-extrabold text-blue-700 tracking-tight">Passing Students</h1>
+    <p class="text-gray-600 mt-2">List of students meeting academic requirements</p>
+</div>
+
+<!-- TABLE CARD -->
+<div class="glass-card w-11/12 mx-auto overflow-x-auto">
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="border-b border-indigo-100">
+                <th class="p-4 text-left">Student ID</th>
+                <th class="p-4 text-left">Attendance</th>
+                <th class="p-4 text-left">Homework</th>
+                <th class="p-4 text-left">Midterm</th>
+                <th class="p-4 text-left">Participation</th>
+                <th class="p-4 text-left">GPA</th>
+            </tr>
+        </thead>
+
+        <tbody class="text-gray-700">
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">1</td><td>0.55</td><td>0.54</td><td>96</td><td>0.64</td><td>1.58</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">2</td><td>0.55</td><td>0.40</td><td>68</td><td>0.75</td><td>3.63</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">3</td><td>0.55</td><td>0.50</td><td>79</td><td>0.70</td><td>3.70</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">5</td><td>0.79</td><td>0.89</td><td>81</td><td>0.63</td><td>2.85</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">8</td><td>0.59</td><td>0.96</td><td>89</td><td>0.76</td><td>3.73</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">9</td><td>0.91</td><td>0.91</td><td>68</td><td>0.60</td><td>2.71</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">12</td><td>0.84</td><td>1.00</td><td>78</td><td>0.78</td><td>2.18</td>
+            </tr>
+
+            <tr class="border-b border-gray-200/60">
+                <td class="p-4">13</td><td>0.90</td><td>0.99</td><td>95</td><td>0.74</td><td>2.65</td>
+            </tr>
+
+            <tr>
+                <td class="p-4">14</td><td>0.93</td><td>0.78</td><td>95</td><td>0.68</td><td>3.11</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center py-6 text-gray-600 mt-16">
+    &copy; 2025 TutorSense. All rights reserved.
+</footer>
+
+</body>
+</html>
