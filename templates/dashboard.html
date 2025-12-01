@@ -1,92 +1,65 @@
 {% extends "base.html" %}
+
 {% block content %}
 
-<h2 class="text-3xl font-bold mb-6 text-center">Dashboard</h2>
+<h2 class="text-4xl font-bold mb-10 text-center text-blue-700 tracking-wide">
+    Dashboard Overview
+</h2>
 
+<!-- STAT CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 max-w-4xl mx-auto">
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">Total Students</h3>
-        <p class="text-3xl font-bold mt-2">{{ stats.total_students }}</p>
-    </div>
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">Passing Students</h3>
-        <p class="text-3xl font-bold text-green-600 mt-2">{{ stats.passing }}</p>
-    </div>
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">At-Risk Students</h3>
-        <p class="text-3xl font-bold text-red-600 mt-2">{{ stats.at_risk }}</p>
-    </div>
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">Average GPA</h3>
-        <p class="text-3xl font-bold mt-2">{{ stats.average_gpa }}</p>
-    </div>
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">Literacy Risk %</h3>
-        <p class="text-3xl font-bold text-yellow-600 mt-2">{{ stats.literacy_risk_pct }}%</p>
-    </div>
-
-
-    <div class="bg-white p-6 rounded shadow text-center">
-        <h3 class="text-xl font-semibold">Predicted Average Final Grade</h3>
-        <p class="text-3xl font-bold text-blue-700 mt-2">{{ stats.average_predicted_grade }}</p>
-
-<h2 class="text-3xl font-bold mb-8 text-center text-blue-700 tracking-wide">Dashboard Overview</h2>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-
-    <!-- Card -->
-    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-2xl transition">
         <h3 class="text-lg font-semibold text-gray-600">Total Students</h3>
         <p class="text-4xl font-extrabold mt-3 text-blue-700">{{ stats.total_students }}</p>
     </div>
 
-    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+    <!-- PASSING STUDENTS (CLICKABLE) -->
+    <a href="{{ url_for('view_students_group', group='passing') }}"
+       class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-2xl transition block">
         <h3 class="text-lg font-semibold text-gray-600">Passing Students</h3>
         <p class="text-4xl font-extrabold mt-3 text-green-600">{{ stats.passing }}</p>
-    </div>
+    </a>
 
-    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+    <!-- AT RISK STUDENTS (CLICKABLE) -->
+    <a href="{{ url_for('view_students_group', group='at-risk') }}"
+       class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-2xl transition block">
         <h3 class="text-lg font-semibold text-gray-600">At-Risk Students</h3>
         <p class="text-4xl font-extrabold mt-3 text-red-600">{{ stats.at_risk }}</p>
-    </div>
+    </a>
 
-    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-2xl transition">
         <h3 class="text-lg font-semibold text-gray-600">Average GPA</h3>
         <p class="text-4xl font-extrabold mt-3 text-blue-700">{{ stats.average_gpa | round(2) }}</p>
     </div>
-
 </div>
 
-
-<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow mb-8">
-    <h3 class="text-xl font-bold mb-2">Overall Performance Insights</h3>
-    <p class="text-gray-700">{{ stats.performance_insight }}</p>
-<h3>Graphs</h3>
-
-<img src="data:image/png;base64,{{ stats.graph_literacy }}" style="width:300px; margin-right:20px;">
-<img src="data:image/png;base64,{{ stats.graph_grade }}" style="width:300px;">
-
+<!-- INSIGHTS CARD -->
+<div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg mb-12">
+    <h3 class="text-2xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+        📊 Overall Performance Insights
+    </h3>
+    <p class="text-gray-700 leading-relaxed">{{ stats.performance_insight }}</p>
 </div>
 
+<!-- GRAPHS -->
+<div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg mb-12">
+    <h3 class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">📈 Graphical Overview</h3>
 
-<div class="max-w-4xl mx-auto bg-white p-6 rounded shadow mb-8">
-    <h3 class="text-xl font-bold mb-2">Recommendations</h3>
+    <div class="flex flex-wrap justify-center gap-6">
+        <img src="data:image/png;base64,{{ stats.graph_literacy }}" class="w-72 rounded-lg shadow">
+        <img src="data:image/png;base64,{{ stats.graph_grade }}" class="w-72 rounded-lg shadow">
+    </div>
+</div>
+
+<!-- RECOMMENDATIONS -->
+<div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg mb-12">
+    <h3 class="text-2xl font-bold mb-4 text-gray-800 flex items-center gap-2">💡 Recommendations</h3>
 
     {% if stats.recommendations %}
-        <ul class="list-disc pl-6 text-gray-700">
+        <ul class="list-disc pl-6 text-gray-700 space-y-2">
             {% for rec in stats.recommendations %}
-            <li>{{ rec }}</li>
+                <li>{{ rec }}</li>
             {% endfor %}
         </ul>
     {% else %}
@@ -94,13 +67,15 @@
     {% endif %}
 </div>
 
+<!-- CSV UPLOAD -->
+<div class="bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg max-w-lg mx-auto mb-12">
+    <h3 class="text-2xl font-semibold mb-4 text-center text-gray-800">Upload Student CSV</h3>
 
+    <form method="POST" enctype="multipart/form-data" class="text-center">
+        <input type="file" name="file" accept=".csv" class="mb-4 block mx-auto text-sm">
 
-<div class="bg-white p-6 rounded shadow max-w-lg mx-auto">
-    <h3 class="text-xl font-semibold mb-4 text-center">Upload Student CSV</h3>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".csv" class="mb-4">
-        <button type="submit" class="w-full bg-blue-600 text-white rounded py-2 font-bold hover:bg-blue-500 transition">
+        <button type="submit"
+            class="w-full bg-blue-600 text-white rounded-md py-3 font-bold text-lg hover:bg-blue-500 transition shadow">
             Upload CSV
         </button>
     </form>

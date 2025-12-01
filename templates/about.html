@@ -20,17 +20,15 @@
     <h2 class="text-3xl font-bold mb-8 text-center text-blue-700">Meet the Team</h2>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
-
-        {% for i in range(1,7) %}
+        {% for member in team %}
         <div class="text-center group">
-            <img src="{{ url_for('static', filename='team/member' ~ i ~ '.jpg') }}"
+            <img src="{{ url_for('static', filename=member.image) }}"
                  class="w-24 h-24 rounded-full mx-auto mb-3 shadow-md group-hover:scale-110 transition"
-                 alt="Team Member {{ i }}">
-            <h3 class="font-semibold text-gray-800">{{ team[i-1].name }}</h3>
-            <p class="text-gray-500 text-sm">{{ team[i-1].role }}</p>
+                 alt="Team Member {{ member.name }}">
+            <h3 class="font-semibold text-gray-800">{{ member.name }}</h3>
+            <p class="text-gray-500 text-sm">{{ member.role }}</p>
         </div>
         {% endfor %}
-
     </div>
 </div>
 
