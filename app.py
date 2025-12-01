@@ -11,16 +11,18 @@ import io, base64
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-
+# Load trained ML model
 model = joblib.load('tutoring_model.pkl')
 
-
+# Global dataframe for uploaded student data
 student_data = pd.DataFrame(columns=[
     'StudentID','Attendance','HomeworkRate','MidtermScore',
     'Participation','PreviousGPA'
 ])
 
-
+# ---------------------------------------------
+# Helper: Generate Base64 Matplotlib Graph
+# ---------------------------------------------
 def generate_graph(title, labels, values, ymin=0, ymax=100):
     plt.figure(figsize=(4,3))
     plt.bar(labels, values)
@@ -36,18 +38,33 @@ def generate_graph(title, labels, values, ymin=0, ymax=100):
     return graph_base64
 
 
+# ---------------------------------------------
+# Team Info (About Page)
+# ---------------------------------------------
+team = [
+    {"name": "Bryan Lloyd T. Tan", "role": "Lead Developer", "image": "team/member1.jpg"},
+    {"name": "Timothy John M. Lardizabal", "role": "Backend Developer", "image": "team/member2.jpg"},
+    {"name": "Arem A. Ancheta", "role": "Frontend Developer", "image": "team/member3.jpg"},
+    {"name": "Aj Karl Ancheta", "role": "ML Specialist", "image": "team/member4.jpg"},
+    {"name": "Chelsea Leigh M. Pascua", "role": "Project Manager", "image": "team/member5.jpg"},
+    {"name": "Trishea Andrea A. Liwanag", "role": "Project Manager", "image": "team/member6.jpg"},
+]
+
+# ---------------------------------------------
+# DASHBOARD ROUTE
+# ---------------------------------------------
 @app.route("/", methods=["GET", "POST"])
 def dashboard():
     global student_data
 
-
+    # Handle CSV Upload
     if request.method == "POST":
         file = request.files.get("file")
         if file and file.filename.endswith(".csv"):
             df = pd.read_csv(file)
-            student_data = df  
+            student_data = df
 
-
+    # Handle empty dashboard
     if student_data.empty:
         return render_template(
             "dashboard.html",
@@ -66,6 +83,7 @@ def dashboard():
             active_page='dashboard'
         )
 
+    # Process student dataset
     total_students = len(student_data)
 
     features = student_data[
@@ -80,12 +98,14 @@ def dashboard():
     literacy_risk_pct = round((at_risk / total_students) * 100, 2)
     average_gpa = round(float(student_data['PreviousGPA'].mean()), 2)
 
+    # Predicted grade (probabilities if available)
     try:
         predicted_probs = model.predict_proba(features)[:, 1] * 100
         average_predicted_grade = round(predicted_probs.mean(), 2)
     except:
         average_predicted_grade = round(student_data['MidtermScore'].mean(), 2)
 
+    # Performance Insight
     if literacy_risk_pct > 50:
         performance_insight = "High number of students are at risk. Immediate intervention required."
     elif literacy_risk_pct > 25:
@@ -93,6 +113,7 @@ def dashboard():
     else:
         performance_insight = "Overall performance looks healthy."
 
+    # Recommendations
     recommendations = []
     if literacy_risk_pct > 40:
         recommendations.append("Increase tutoring sessions and reading reinforcement.")
@@ -103,6 +124,7 @@ def dashboard():
     if not recommendations:
         recommendations.append("Students are performing well. Keep current strategy.")
 
+    # Generate graphs
     graph_literacy = generate_graph(
         "Average Literacy Risk (%)",
         ["Literacy Risk %"],
@@ -135,9 +157,9 @@ def dashboard():
     )
 
 
-# -------------------------------------------------
+# ---------------------------------------------
 # STUDENT PREDICTOR PAGE
-# -------------------------------------------------
+# ---------------------------------------------
 @app.route("/predict", methods=["GET", "POST"])
 def index():
     global student_data
@@ -185,11 +207,21 @@ def index():
     )
 
 
+# ---------------------------------------------
+# ABOUT PAGE
+# ---------------------------------------------
 @app.route("/about")
 def about():
-    return render_template("about.html", active_page='about')
+    return render_template(
+        "about.html",
+        active_page='about',
+        team=team
+    )
 
 
+# ---------------------------------------------
+# RUN APP
+# ---------------------------------------------
 if __name__ == '__main__':
     if not os.path.exists('uploads'):
         os.makedirs('uploads')

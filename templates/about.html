@@ -1,55 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="bg-white p-6 rounded shadow max-w-2xl mx-auto mb-8">
-    <h2 class="text-2xl font-bold mb-4">About TutorSense</h2>
-    <p class="mb-2">
-        TutorSense is an AI-powered student risk predictor. It analyzes attendance, homework, participation, and exam performance to identify students at risk of failing. Teachers can intervene early to provide targeted support.
+
+<div class="bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-xl max-w-3xl mx-auto mb-12">
+    <h2 class="text-3xl font-bold mb-6 text-blue-700">About TutorSense</h2>
+
+    <p class="text-gray-700 leading-relaxed mb-3">
+        TutorSense is an AI-powered student performance analysis tool designed to identify at-risk students early.
+        Using attendance, homework scores, participation, and exam performance, our prediction model assists teachers
+        in making informed academic interventions.
     </p>
-    <p>
+
+    <p class="text-gray-700 leading-relaxed">
         Built with Python, Flask, Tailwind CSS, Chart.js, and a Random Forest machine learning model.
     </p>
 </div>
 
-<!-- Team / Collaborators -->
-<div class="bg-white p-6 rounded shadow max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-center">Our Team</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-6 justify-items-center">
-        <!-- Team Member 1 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member1.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 1">
-            <h3 class="font-semibold">Bryan Lloyd T. Tan</h3>
-            <p class="text-gray-500 text-sm">Lead Developer</p>
+<!-- Team Section -->
+<div class="bg-white/80 backdrop-blur-md p-10 rounded-xl shadow-xl max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center text-blue-700">Meet the Team</h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
+
+        {% for i in range(1,7) %}
+        <div class="text-center group">
+            <img src="{{ url_for('static', filename='team/member' ~ i ~ '.jpg') }}"
+                 class="w-24 h-24 rounded-full mx-auto mb-3 shadow-md group-hover:scale-110 transition"
+                 alt="Team Member {{ i }}">
+            <h3 class="font-semibold text-gray-800">{{ team[i-1].name }}</h3>
+            <p class="text-gray-500 text-sm">{{ team[i-1].role }}</p>
         </div>
-        <!-- Team Member 2 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member2.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 2">
-            <h3 class="font-semibold">Timothy John M. Lardizabal</h3>
-            <p class="text-gray-500 text-sm">Backend Developer</p>
-        </div>
-        <!-- Team Member 3 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member3.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 3">
-            <h3 class="font-semibold">Arem A. Ancheta</h3>
-            <p class="text-gray-500 text-sm">Frontend Developer</p>
-        </div>
-        <!-- Team Member 4 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member4.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 4">
-            <h3 class="font-semibold">Aj Karl Ancheta</h3>
-            <p class="text-gray-500 text-sm">ML Specialist</p>
-        </div>
-        <!-- Team Member 5 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member5.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 5">
-            <h3 class="font-semibold">Chelsea Leigh M. Pascua</h3>
-            <p class="text-gray-500 text-sm">Project Manager</p>
-        </div>
-        <!-- Team Member 6 -->
-        <div class="text-center">
-            <img src="{{ url_for('static', filename='team/member6.jpg') }}" class="w-24 h-24 rounded-full mx-auto mb-2" alt="Member 6">
-            <h3 class="font-semibold">Trishea Andrea A. Liwanag</h3>
-            <p class="text-gray-500 text-sm">Project Manager</p>
-        </div>
+        {% endfor %}
+
     </div>
 </div>
+
 {% endblock %}

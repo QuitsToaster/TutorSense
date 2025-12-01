@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<<<<<<< Updated upstream
 <h2 class="text-3xl font-bold mb-6 text-center">Dashboard</h2>
 
 
@@ -40,9 +41,36 @@
     <div class="bg-white p-6 rounded shadow text-center">
         <h3 class="text-xl font-semibold">Predicted Average Final Grade</h3>
         <p class="text-3xl font-bold text-blue-700 mt-2">{{ stats.average_predicted_grade }}</p>
+=======
+<h2 class="text-3xl font-bold mb-8 text-center text-blue-700 tracking-wide">Dashboard Overview</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+
+    <!-- Card -->
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+        <h3 class="text-lg font-semibold text-gray-600">Total Students</h3>
+        <p class="text-4xl font-extrabold mt-3 text-blue-700">{{ stats.total_students }}</p>
     </div>
+
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+        <h3 class="text-lg font-semibold text-gray-600">Passing Students</h3>
+        <p class="text-4xl font-extrabold mt-3 text-green-600">{{ stats.passing }}</p>
+    </div>
+
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+        <h3 class="text-lg font-semibold text-gray-600">At-Risk Students</h3>
+        <p class="text-4xl font-extrabold mt-3 text-red-600">{{ stats.at_risk }}</p>
+    </div>
+
+    <div class="p-6 bg-white/70 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition">
+        <h3 class="text-lg font-semibold text-gray-600">Average GPA</h3>
+        <p class="text-4xl font-extrabold mt-3 text-blue-700">{{ stats.average_gpa | round(2) }}</p>
+>>>>>>> Stashed changes
+    </div>
+
 </div>
 
+<<<<<<< Updated upstream
 
 
 
@@ -78,6 +106,18 @@
     <form method="POST" enctype="multipart/form-data">
         <input type="file" name="file" accept=".csv" class="mb-4">
         <button type="submit" class="w-full bg-blue-600 text-white rounded py-2 font-bold hover:bg-blue-500 transition">
+=======
+<!-- Upload CSV -->
+<div class="bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-xl max-w-lg mx-auto">
+    <h3 class="text-2xl font-bold mb-5 text-center text-blue-700">Upload Student CSV</h3>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        <input type="file" name="file" accept=".csv"
+               class="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500">
+
+        <button type="submit"
+            class="w-full bg-blue-600 text-white rounded-lg py-3 text-lg font-semibold hover:bg-blue-700 transition">
+>>>>>>> Stashed changes
             Upload CSV
         </button>
     </form>

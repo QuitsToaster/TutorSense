@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
+<<<<<<< Updated upstream
 <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
     <h2 class="text-2xl font-bold mb-6 text-center">Student Risk Predictor</h2>
+=======
+<div class="max-w-lg mx-auto bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Student Risk Predictor</h2>
+>>>>>>> Stashed changes
 
     {% if students_list %}
-    <form method="POST" class="space-y-4">
+    <form method="POST" class="space-y-6">
+
         <div>
-            <label class="block font-medium">Select Student</label>
-            <select name="student_id" class="w-full border rounded px-3 py-2" required>
-                <option value="">-- Select --</option>
+            <label class="block font-medium text-gray-700 mb-1">Select Student</label>
+            <select name="student_id"
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+                    required>
+                <option value="">-- Choose Student --</option>
                 {% for sid in students_list %}
                 <option value="{{ sid }}" {% if sid == selected_student_id %}selected{% endif %}>
                     {{ sid }}
@@ -18,18 +26,30 @@
             </select>
         </div>
 
+<<<<<<< Updated upstream
         <button type="submit" class="w-full bg-blue-600 text-white rounded py-2 font-bold hover:bg-blue-500 transition">
+=======
+        <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold text-lg hover:bg-blue-700 transition">
+>>>>>>> Stashed changes
             Predict
         </button>
     </form>
+
     {% else %}
+<<<<<<< Updated upstream
     <p class="text-center text-red-500 font-semibold">
         No students uploaded yet. Please upload CSV in the dashboard.
+=======
+    <p class="text-center text-red-600 font-semibold mt-4">
+        No students uploaded yet. Upload a CSV in the dashboard.
+>>>>>>> Stashed changes
     </p>
     {% endif %}
 
 
     {% if prediction %}
+<<<<<<< Updated upstream
     <div class="mt-6 bg-gray-100 p-4 rounded space-y-4">
 
 
@@ -73,6 +93,10 @@
         </div>
         {% endif %}
 
+=======
+    <div class="mt-6 bg-blue-100 border border-blue-300 text-blue-800 p-4 rounded-xl text-center font-semibold">
+        {{ prediction }}
+>>>>>>> Stashed changes
     </div>
     {% endif %}
 </div>
