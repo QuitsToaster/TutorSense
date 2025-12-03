@@ -134,7 +134,6 @@ def dashboard():
     try:
         predictions = model.predict(features)
     except Exception:
-        
         predictions = np.zeros(total_students, dtype=int)
 
     passing = int((predictions == 1).sum())
@@ -165,15 +164,45 @@ def dashboard():
     if not recommendations:
         recommendations.append("Students are performing well. Keep current strategy.")
 
-    def generate_graph(title, labels, values, ymin=0, ymax=100):
-        fig, ax = plt.subplots(figsize=(4,3))
-        ax.bar(labels, values)
-        ax.set_title(title)
+    # -----------------------
+    # Modern Graph Generator
+    # -----------------------
+    def generate_graph(title, labels, values, color="#4f46e5", ymin=0, ymax=100):
+        fig, ax = plt.subplots(figsize=(5,3))
+        bars = ax.bar(labels, values, color=color, edgecolor='none', width=0.5)
+        
+        # Gradient effect (approximate using alpha)
+        for bar in bars:
+            bar.set_alpha(0.85)
+            bar.set_linewidth(0)
+            bar.set_edgecolor("none")
+            bar.set_capstyle("round")
+        
+        # Remove top and right spines
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_color("#cbd5e1")
+        ax.spines['bottom'].set_color("#cbd5e1")
+        
+        # Subtle grid
+        ax.yaxis.grid(True, linestyle='--', alpha=0.3)
+        ax.set_axisbelow(True)
+        
+        # Bar labels
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2, height + 1, f"{height:.1f}", ha='center', va='bottom', fontsize=10, fontweight='bold', color="#1e293b")
+        
         ax.set_ylim(ymin, ymax)
+        ax.set_title(title, fontsize=12, fontweight='bold', pad=10, color="#1e293b")
+        ax.set_facecolor("#f1f5f9")
+        fig.patch.set_facecolor("#f8fafc")
+        
+        plt.tight_layout()
         return fig_to_base64(fig)
 
-    graph_literacy = generate_graph("Average Literacy Risk (%)", ["Literacy Risk %"], [literacy_risk_pct], ymin=0, ymax=100)
-    graph_grade = generate_graph("Predicted Average Final Grade", ["Predicted Grade"], [average_predicted_grade], ymin=0, ymax=100)
+    graph_literacy = generate_graph("Average Literacy Risk (%)", ["Literacy Risk %"], [literacy_risk_pct], color="#22c55e", ymin=0, ymax=100)
+    graph_grade = generate_graph("Predicted Average Final Grade", ["Predicted Grade"], [average_predicted_grade], color="#3b82f6", ymin=0, ymax=100)
 
     return render_template(
         "dashboard.html",
@@ -191,6 +220,7 @@ def dashboard():
         },
         active_page='dashboard'
     )
+
 
 
 # ---------------------------------------------
@@ -329,9 +359,9 @@ def about():
         {"name": "Bryan Lloyd T. Tan", "role": "Lead Developer", "image": "team/member1.jpg"},
         {"name": "Timothy John M. Lardizabal", "role": "Backend Developer", "image": "team/member2.jpg"},
         {"name": "Arem A. Ancheta", "role": "Frontend Developer", "image": "team/member3.jpg"},
-        {"name": "Aj Karl Ancheta", "role": "Frontend Developer", "image": "team/member3.jpg"},
-        {"name": "Chelsea Leigh M. Pascua", "role": "Project Manager I", "image": "team/member3.jpg"},
-        {"name": "Trishea Andrea A. Liwanag", "role": "Project Manager II", "image": "team/member3.jpg"},
+        {"name": "Aj Karl Ancheta", "role": "Frontend Developer", "image": "team/member4.jpg"},
+        {"name": "Chelsea Leigh M. Pascua", "role": "Project Manager I", "image": "team/member5.jpg"},
+        {"name": "Trishea Andrea A. Liwanag", "role": "Project Manager II", "image": "team/member6.jpg"},
     ]
     return render_template(
         "about.html",

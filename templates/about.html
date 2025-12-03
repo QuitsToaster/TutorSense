@@ -1,32 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-xl max-w-3xl mx-auto mb-12">
-    <h2 class="text-3xl font-bold mb-6 text-blue-700">About TutorSense</h2>
-
-    <p class="text-gray-700 leading-relaxed mb-3">
+<!-- About Section with Gradient & Divider -->
+<div class="max-w-5xl mx-auto mb-16 p-12 rounded-3xl bg-gradient-to-r from-blue-50 via-white/70 to-blue-50 shadow-xl border border-blue-200 text-center">
+    <h2 class="text-4xl font-extrabold mb-6 text-blue-800">
+        About TutorSense
+    </h2>
+    <p class="text-gray-700 leading-relaxed mb-4 text-lg">
         TutorSense is an AI-powered student performance analysis tool designed to identify at-risk students early.
         Using attendance, homework scores, participation, and exam performance, our prediction model assists teachers
         in making informed academic interventions.
     </p>
-
-    <p class="text-gray-700 leading-relaxed">
+    <p class="text-gray-700 leading-relaxed text-lg">
         Built with Python, Flask, Tailwind CSS, Chart.js, and a Random Forest machine learning model.
     </p>
 </div>
 
-<!-- Team Section -->
-<div class="bg-white/80 backdrop-blur-md p-10 rounded-xl shadow-xl max-w-5xl mx-auto">
-    <h2 class="text-3xl font-bold mb-8 text-center text-blue-700">Meet the Team</h2>
+<hr class="max-w-5xl mx-auto border-t-2 border-blue-100 mb-16">
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8">
+<!-- Meet the Team Section with Hover Cards -->
+<div class="max-w-5xl mx-auto p-12 rounded-3xl bg-white/90 shadow-2xl border border-blue-100">
+    <h2 class="text-4xl font-extrabold mb-12 text-center text-blue-800">
+        Meet the Team
+    </h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-10">
         {% for member in team %}
-        <div class="text-center group">
-            <img src="{{ url_for('static', filename=member.image) }}"
-                 class="w-24 h-24 rounded-full mx-auto mb-3 shadow-md group-hover:scale-110 transition"
-                 alt="Team Member {{ member.name }}">
-            <h3 class="font-semibold text-gray-800">{{ member.name }}</h3>
-            <p class="text-gray-500 text-sm">{{ member.role }}</p>
+        <div class="group text-center bg-white rounded-2xl p-4 shadow-md transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+            <div class="relative mx-auto w-24 h-24">
+                <img src="{{ url_for('static', filename=member.image) }}"
+                     class="w-full h-full rounded-full object-cover shadow-lg transition duration-300 group-hover:scale-110"
+                     alt="Team Member {{ member.name }}">
+            </div>
+            <h3 class="font-semibold text-gray-800 mt-4 text-sm sm:text-base">
+                {{ member.name }}
+            </h3>
+            <p class="text-gray-500 text-xs sm:text-sm">
+                {{ member.role }}
+            </p>
         </div>
         {% endfor %}
     </div>
